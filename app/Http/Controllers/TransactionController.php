@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use app\Models\Transaction;
-use app\Models\TransacationDetail;
+use App\Models\Transaction;
+use App\Models\TransactionDetail;
 
 class TransactionController extends Controller
 {
@@ -15,57 +15,64 @@ class TransactionController extends Controller
 
     public function index()
     {
-        $item = Transaction::all();
+        $items = Transaction::all();
         return view('pages.transaction.index')->with([
-            'items'=>$items
+            'items' => $items
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+ 
     public function create()
     {
-        //
+        // Tampilkan form untuk membuat data transaksi baru
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    
     public function store(Request $request)
     {
-        //
+        // Validasi data yang diterima dari form jika diperlukan
+        Transaction::create([
+            'field1' => $request->field1,
+            'field2' => $request->field2,
+            // Isi dengan field yang sesuai
+        ]);
+
+        return redirect()->route('transactions.index')->with('success', 'Transaction created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        // Tampilkan detail transaksi berdasarkan $id
+        $item = Transaction::findOrFail($id);
+        return view('pages.transaction.show', compact('item'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        // Tampilkan form untuk mengedit data transaksi berdasarkan $id
+        $item = Transaction::findOrFail($id);
+        return view('pages.transaction.edit', compact('item'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        // Validasi data yang diterima dari form jika diperlukan
+        $item = Transaction::findOrFail($id);
+        $item->update([
+            'field1' => $request->field1,
+            'field2' => $request->field2,
+            // Isi dengan field yang sesuai
+        ]);
+
+        return redirect()->route('transactions.index')->with('success', 'Transaction updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        // Hapus data transaksi berdasarkan $id
+        $item = Transaction::findOrFail($id);
+        $item->delete();
+
+        return redirect()->route('transactions.index')->with('success', 'Transaction deleted successfully.');
     }
 }

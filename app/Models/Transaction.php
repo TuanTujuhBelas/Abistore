@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,10 +9,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Transaction extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable = ['uuid','name','email','number','address','transaction_total','transaction_status'];
+
+    protected $fillable = [
+        'uuid', 'name', 'email', 'number', 'address', 'transaction_total', 'transaction_status'
+    ];
+
     protected $hidden = [];
 
-    public function details(){
-        return $this->hasmany(TransactionDetail::class,'transactions_id');
+    public function details()
+    {
+        return $this->hasMany(TransactionDetail::class, 'transactions_id');
     }
 }
