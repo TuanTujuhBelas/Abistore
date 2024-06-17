@@ -34,3 +34,5 @@ Route::resource('transactions', TransactionController::class);
 
 // Tambahkan rute untuk mengubah status transaksi
 Route::get('transactions/{id}/status', [TransactionController::class, 'changeStatus'])->name('transactions.status');
+Route::get('transactions/{id}/edit', [TransactionController::class, 'edit'])->name('transactions.edit');
+Route::put('transactions/{id}', [TransactionController::class, 'update'])->name('transactions.update');
