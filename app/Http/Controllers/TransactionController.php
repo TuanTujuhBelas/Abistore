@@ -15,64 +15,49 @@ class TransactionController extends Controller
 
     public function index()
     {
-        $items = Transaction::all();
-        return view('pages.transaction.index')->with([
+        $items = Transaction::all(); 
+        return view('pages.transactions.index')->with([
             'items' => $items
         ]);
     }
 
- 
+    // Metode untuk mengubah status transaksi
+    public function changeStatus($id, Request $request)
+    {
+        $transaction = Transaction::findOrFail($id);
+        $transaction->transaction_status = $request->status;
+        $transaction->save();
+
+        return redirect()->route('transactions.index');
+    }
+
     public function create()
     {
-        // Tampilkan form untuk membuat data transaksi baru
+        //
     }
 
-    
     public function store(Request $request)
     {
-        // Validasi data yang diterima dari form jika diperlukan
-        Transaction::create([
-            'field1' => $request->field1,
-            'field2' => $request->field2,
-            // Isi dengan field yang sesuai
-        ]);
-
-        return redirect()->route('transactions.index')->with('success', 'Transaction created successfully.');
+        //
     }
 
-    public function show($id)
+    public function show(string $id)
     {
-        // Tampilkan detail transaksi berdasarkan $id
-        $item = Transaction::findOrFail($id);
-        return view('pages.transaction.show', compact('item'));
+        //
     }
 
-    public function edit($id)
+    public function edit(string $id)
     {
-        // Tampilkan form untuk mengedit data transaksi berdasarkan $id
-        $item = Transaction::findOrFail($id);
-        return view('pages.transaction.edit', compact('item'));
+        //
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
-        // Validasi data yang diterima dari form jika diperlukan
-        $item = Transaction::findOrFail($id);
-        $item->update([
-            'field1' => $request->field1,
-            'field2' => $request->field2,
-            // Isi dengan field yang sesuai
-        ]);
-
-        return redirect()->route('transactions.index')->with('success', 'Transaction updated successfully.');
+        //
     }
 
-    public function destroy($id)
+    public function destroy(string $id)
     {
-        // Hapus data transaksi berdasarkan $id
-        $item = Transaction::findOrFail($id);
-        $item->delete();
-
-        return redirect()->route('transactions.index')->with('success', 'Transaction deleted successfully.');
+        //
     }
 }

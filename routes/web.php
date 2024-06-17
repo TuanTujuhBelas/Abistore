@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\TransactionController; // Mengimpor TransactionController
+use App\Http\Controllers\TransactionController; 
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -31,3 +31,6 @@ Auth::routes(['register' => false]);
 Route::get('logout', [LoginController::class, 'logout']);
 
 Route::resource('transactions', TransactionController::class);
+
+// Tambahkan rute untuk mengubah status transaksi
+Route::get('transactions/{id}/status', [TransactionController::class, 'changeStatus'])->name('transactions.status');
